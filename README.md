@@ -1,5 +1,9 @@
 # ReDestroyDeR Helm Repository
+
+Add this repository to Helm: `helm repo add redestroyder-repo https://redestroyder.github.io/helm-charts/`
+
 Index:
+
 ```yaml
 apiVersion: v1
 entries:

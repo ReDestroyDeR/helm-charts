@@ -36,12 +36,13 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+extraLabels:
+
 service:
   type: LoadBalancer
   port: 80
   targetPort: 8080
   clusterIP: ""
-  labels:
 
 config:
   postgres:

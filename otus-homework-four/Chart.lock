@@ -1,12 +1,12 @@
 dependencies:
 - name: authentication-service
   repository: https://redestroyder.github.io/helm-charts/
-  version: 0.2.1
+  version: 0.2.2
 - name: business-service
   repository: https://redestroyder.github.io/helm-charts/
-  version: 0.2.0
+  version: 0.2.1
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 11.0.6
-digest: sha256:dbd1443f84e5abd27be42c901c2ab5c5b4ef8ba3c792fbd5459744f32b323ce6
-generated: "2022-02-18T18:57:15.300917796+03:00"
+digest: sha256:42c7f62c78b8b31b32a9bd4aa75c0e87896e761940c020a677c9ff12271ece3b
+generated: "2022-02-18T19:15:40.370068817+03:00"

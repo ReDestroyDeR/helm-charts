@@ -63,6 +63,9 @@ authentication-service:
     swagger:
       base_url: "/documentation"
 
+  extraLabels:
+    app: authentication-service
+
 business-service:
   gateway:
     hosts:
@@ -72,6 +75,9 @@ business-service:
     postgres:
       user: business
       password: business_password
+
+  extraLabels:
+    app: business-service
 
   service:
     clusterIP: "10.233.5.75"

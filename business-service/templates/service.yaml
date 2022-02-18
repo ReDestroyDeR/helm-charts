@@ -4,7 +4,7 @@ metadata:
   name: {{ include "BusinessService.fullname" . }}
   labels:
     {{- include "BusinessService.labels" . | nindent 4 }}
-    {{- with .Values.service.labels }}
+    {{- with .Values.extraLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:

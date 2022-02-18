@@ -5,6 +5,9 @@ metadata:
 spec:
   selector:
     {{- include "AuthenticationService.labels" . | nindent 4 }}
+    {{- with .Values.extraLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   servers:
     - port:
         targetPort: {{ .Values.service.targetPort }}

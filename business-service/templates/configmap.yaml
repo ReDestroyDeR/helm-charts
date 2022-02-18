@@ -4,5 +4,5 @@ metadata:
   name: {{ include "BusinessService.fullname" . }}
 
 data:
-  POSTGRES_URI: {{ .Values.config.postgres.uri }}
-  POSTGRES_PORT: {{ .Values.config.postgres.port }}
+  POSTGRES_URI: "{{ .Values.config.postgres.uri }}"
+  POSTGRES_PORT: "{{ .Values.config.postgres.port }}"

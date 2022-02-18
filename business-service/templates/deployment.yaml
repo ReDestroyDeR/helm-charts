@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "BusinessService.labels" . | nindent 4 }}
     {{- with .Values.extraLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -14,7 +13,9 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "BusinessService.selectorLabels" . | nindent 6 }}
+      {{- with .Values.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+      {{- end }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

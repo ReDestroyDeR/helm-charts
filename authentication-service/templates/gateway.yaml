@@ -4,7 +4,6 @@ metadata:
   name: {{ include "AuthenticationService.fullname" . }}
 spec:
   selector:
-    {{- include "AuthenticationService.labels" . | nindent 4 }}
     {{- with .Values.extraLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}

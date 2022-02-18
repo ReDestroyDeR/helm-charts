@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: {{ include "BusinessService.fullname" . }}
   labels:
-    {{- include "BusinessService.labels" . | nindent 4 }}
     {{- with .Values.extraLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -16,4 +15,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "BusinessService.selectorLabels" . | nindent 4 }}
+    {{- with .Values.extraLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}

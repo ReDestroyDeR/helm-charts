@@ -45,7 +45,7 @@ authentication-service:
   config:
     postgres:
       uri: "10.233.5.70"
-      port: 5432
+      port: "5432"
 
     external:
       business:
@@ -70,7 +70,7 @@ business-service:
   config:
     postgres:
       uri: "10.233.5.70"
-      port: 5432
+      port: "5432"
 
 imagePullSecrets: []
 nameOverride: ""

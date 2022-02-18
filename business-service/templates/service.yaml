@@ -4,6 +4,9 @@ metadata:
   name: {{ include "BusinessService.fullname" . }}
   labels:
     {{- include "BusinessService.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.type }}
   clusterIP: {{ .Values.service.clusterIP }}

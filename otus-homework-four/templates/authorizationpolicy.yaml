@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: istio-ingress
+      {{- include "otus-homework-four.selectorLabels" . | nindent 6 }}
   action: DENY
   rules:
     - from:

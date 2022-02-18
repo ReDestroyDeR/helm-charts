@@ -58,7 +58,7 @@ authentication-service:
 
     auth:
       salt_length: "32"
-      bcrypt_strength: "32"
+      bcrypt_strength: "10"
 
     swagger:
       base_url: "/documentation"

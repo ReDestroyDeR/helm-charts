@@ -1,0 +1,55 @@
+# Default values for otus-homework-four.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+postgresql:
+  primary:
+    service:
+      clusterIP: postgres.otus.four.cluster.local
+
+  auth:
+    username: postgres
+    password: postgres
+    database: authentication
+
+authentication-service:
+  secrets:
+    postgres:
+      username: postgres
+      password: postgres
+
+  config:
+    postgres:
+      uri: postgres.otus.four.cluster.local
+      port: "5432"
+
+    external:
+      business:
+        url: business.otus.four.cluster.local
+        endpoints:
+          create: "/user"
+
+
+business-service:
+  secrets:
+    postgres:
+      username: postgres
+      password: postgres
+
+  service:
+    clusterIP: business.otus.four.cluster.local
+
+  config:
+    postgres:
+      uri: postgres.otus.four.cluster.local
+      port: "5432"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

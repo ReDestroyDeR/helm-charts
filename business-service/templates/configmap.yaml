@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ include "BusinessService.fullname" . }}
 
-binaryData:
-  POSTGRES_URI: {{ .Values.config.postgres.uri | b64enc }}
-  POSTGRES_PORT: {{ .Values.config.postgres.port | b64enc }}
+data:
+  POSTGRES_URI: {{ .Values.config.postgres.uri }}
+  POSTGRES_PORT: {{ .Values.config.postgres.port }}

@@ -21,5 +21,3 @@ spec:
               - "DELETE"
             paths:
               - "/"
-      when:
-        - key: request.auth.claims[]

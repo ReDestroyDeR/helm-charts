@@ -7,7 +7,7 @@ dependencies:
     version: 0.1.0
     repository: https://redestroyder.github.io/helm-charts/
   - name: business-service
-    version: 0.1.0
+    version: 0.1.1
     repository: https://redestroyder.github.io/helm-charts/
   - name: postgresql
     version: 11.0.6

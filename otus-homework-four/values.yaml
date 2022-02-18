@@ -5,43 +5,70 @@
 postgresql:
   primary:
     service:
-      clusterIP: postgres.otus.four.cluster.local
+      clusterIP: "10.233.5.70"
+    initdb:
+      scripts:
+        init.sql: |
+          CREATE USER authentication WITH PASSWORD 'authentication_password';
+          CREATE USER business WITH PASSWORD 'business_password';
+          CREATE DATABASE authentication;
+          CREATE DATABASE business;
+          GRANT ALL PRIVILEGES ON DATABASE authentication TO authentication;
+          GRANT ALL PRIVILEGES ON DATABASE business TO business;
 
   auth:
-    username: postgres
-    password: postgres
-    database: authentication
+    enablePostgresUser: false
 
 authentication-service:
+  gateway:
+    hosts:
+      - "arch.homework"
+
   secrets:
     postgres:
-      username: postgres
-      password: postgres
+      username: authentication
+      password: authentication_password
+
+    jwt:
+      # Script used to generate keypair
+      # openssl genpkey -algorithm RSA -out .temp/private.pem -pkeyopt rsa_keygen_bits:2048
+      # openssl rsa -pubout -in .temp/private.pem -out .temp/public_key.pem
+      #
+      # cat .temp/private.pem | base64 | tr --delete '\n'
+      # cat .temp/public_key.pem | base64 | tr --delete '\n'
+      # rm -rf .temp
+
+      private_key_b64: "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRQ3g4cnFOOENkajlVckoKSDFFZHNKQzU3alAyRDFIQ1J3eXF3Q2VRbGUwRHYwNlVZMXprVC83UU9URFBXeTBSQmpCZUZUL0YwZGh1eU5RVgp0WEJDWW0yWnRXQlNodTBudEFxa0xGcXB4Q1Y4T2VwczNXSFBJUlJGY3pPaW52eHVwVFRMK3FGRTBoM2dKb1FWCmw3bTdaMkdIUDhuZkZWc0ZxTng2QTdPdm5scGwvZjZ1d1Y5emt0enY3Ykh1Sm5EZnBFZnNsVExETU1paXVNUHEKVmczSEdEeG1ROEZpT3ZyYUxVUjRNcEJTVnlQN1lFcWpUMmlUSCsvTVpaRjNLd1lKdmVGUi9sODVRVWxWa1lNWgp3NDVFWTRiZUZ4cGVwY1o4R2tyc2RjTVB5eEVuSDZMbEJDdzBOQjIvM1RHQW91K1B6Y2ZYZGVWWTVsUVZtOUZhCkI4NTZGSGFQQWdNQkFBRUNnZ0VBWjFWbHdkRElmd0pOS0ZlNE9mNXpQSlUzdFZhV0NyUkpoY3BKNzJzd2xIRisKUnlzZ0lURFc3c0dYTjRKaHZEWVUxajJPcCtoQXY2eDloQkcxbThjZWtCakVVNGdvcFZxbXAwbGVhS0VQaDREMgpRYnVZOWJmbTFxR2NSWDMvWnAwbStLQ1ZENnJZVUhidFVzQ2x5VTZ5VXVEVzhHV3RVcThKUVExdlJiYzJGVzBkCmdXekZsVFBSK3VSOXBmYnh0eUs3M2J0aTF4MDUxMG1uSWFzcSs3UDJiQWJGaVAybjZTbFZGUlROZURRYkY5clIKSStjUDRJZEVYc3JpNUh0ZGF2akcrY0NzVkNOVHJTdkNBeGJQdXhRRWVVT28zcmFreFpBNEw4K3ZwMmpGR2t5MApVTytqaUEzcTlUSXhVZHlmb3V5RWxwclB0eU5hYlNKcVV5RWZQcUZ2cVFLQmdRRHFmQmhmWXRhOCt3eHJYUzBRCnpZU3ZOVDVZNmhJYlF0TUVkYmlkTnozT2o4MER0YWwwcTdwMnlEdkhXVnp4aDNWdWp1RFRIVlpYdE01K0drYkEKWUdLdm5BUFJLbVZCOVlxVkxKaVAyRUJ2dXhPaUdvNkkvU2ZJcFJhY0JkRzVwb0haQUZjZHNFL2VMQUlYMitqVAo0Q2xMUTdLeFBGQnNIeGpOdUFqWkwzc1ZGUUtCZ1FEQ1JwK1FCSjRGZWF0c292d0FPSVJHbk85Z1VBSU1hZFlWCnpmK0JMMEhuNVEySDNrKytjRUV2Y0ErRnQrei9TRnpBRjNpWitFUHJ0LzZhTzFTSFlUQzR5WVcxNzN6ODN3MVkKY2hIUFlncTZwaFZhOWpSNlo3MTA2WnU4dW80YmNnd3A3VUozMmZwQVlKVmpLcCtVeW5ZSE9tcEVXMnR4YTd1MApSRlJpcWMvT0V3S0JnUUNTOUgwTjR0TDBFMTZBTnlBVVJNbGdTVDB1Mmx2SXJBTzE2dFZ0Nm40WTQvUzMyM1U5ClFwY1U5SDdLZkE0TTdUbEN0ZGJmV0thUlJ5YVd6MzhCK0NaQktzVVZwTDFiTGpqUkx1YmFWOHhpZWR0Zkg4ZXUKd1FIYTlPUUxtbllMSlBpQitIMmdoS3c1Y0ZsTGZLNFpnNFk5dmtyU1d4dUg5NkZDNUpEZkZLdk4xUUtCZ0V0SAp1SDdDKzBTZDMrcEp3YUtJUStGazRIRU9yNnlGdWxwYXAzNDBoTEpLRkpNb2R2Z1JZWUR6U0dDRlk4V01FYnl4Cm01NzJEOE9nV1gwRUxuNERFREVhamNCeEc1cVZDQVBVdDhnSGNxYmV3bm1yMjZ2dTFRQWZvYVJoR2IzUzFKbk8KZ1NvV0FoMitEMFVNK0NkY3lKMkdhalV3dzVLQXI0eHJ5ZE10Z0FPWEFvR0JBSWd5QjlvYmQwK1lUM2IzdHdOUQpSN20xdjY1eE94TUxxTlVIMDZzTWRLSkdhczFaMUxtdXZmL2tzMVYxV0dBM3kzTU54MTFJbnN5OGlNeWxvcjhMCnh1ako2M1pxTDNOamliOWRjdTVSR2JFTUZWb04zQlZaOWZSNDBBZ0dmcHFPa2FrZjVuRFlKTHQ2NWZzbFZpYWMKVGlDOFdOdlVPVjhSbGlRZ0YwcTlXRHpwCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K"
+      public_key_b64: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFzZks2amZBblkvVkt5UjlSSGJDUQp1ZTR6OWc5UndrY01xc0Fua0pYdEE3OU9sR05jNUUvKzBEa3d6MXN0RVFZd1hoVS94ZEhZYnNqVUZiVndRbUp0Cm1iVmdVb2J0SjdRS3BDeGFxY1FsZkRucWJOMWh6eUVVUlhNem9wNzhicVUweS9xaFJOSWQ0Q2FFRlplNXUyZGgKaHovSjN4VmJCYWpjZWdPenI1NWFaZjMrcnNGZmM1TGM3KzJ4N2ladzM2Ukg3SlV5d3pESW9yakQ2bFlOeHhnOApaa1BCWWpyNjJpMUVlREtRVWxjaisyQktvMDlva3gvdnpHV1JkeXNHQ2IzaFVmNWZPVUZKVlpHREdjT09SR09HCjNoY2FYcVhHZkJwSzdIWEREOHNSSngraTVRUXNORFFkdjkweGdLTHZqODNIMTNYbFdPWlVGWnZSV2dmT2VoUjIKandJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
 
   config:
     postgres:
-      uri: postgres.otus.four.cluster.local
+      uri: "10.233.5.70"
       port: "5432"
 
     external:
       business:
-        url: business.otus.four.cluster.local
+        url: "10.233.5.75"
         endpoints:
           create: "/user"
 
 
 business-service:
-  secrets:
+  gateway:
+    hosts:
+      - "arch.homework"
+
+  secret:
     postgres:
-      username: postgres
-      password: postgres
+      user: business
+      password: business_password
 
   service:
-    clusterIP: business.otus.four.cluster.local
+    clusterIP: "10.233.5.75"
 
   config:
     postgres:
-      uri: postgres.otus.four.cluster.local
+      uri: "10.233.5.70"
       port: "5432"
 
 imagePullSecrets: []

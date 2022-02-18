@@ -12,6 +12,6 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        {{ range $k, $host := .Values.gateway.hosts }}
-        {{ $host | nindent 8 }}
+        {{ range $key, $value := .Values.gateway.hosts }}
+        - {{ $value }}
         {{ end }}
